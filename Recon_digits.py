@@ -171,10 +171,11 @@ if __name__ == '__main__':
         return np.array(f_net_set)
 
 
-    _changed_image_first = np.array([-1, -1, -1, 1, -1, 1, -1, 1, -1, 1, 1, -1, 1, 1, 1])  #### ------------CHANGE
+    _changed_image_first = np.array([-1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1, 1, -1, -1, -1])  #### ------------CHANGE
     start_vector =  _changed_image_first.tolist()
 
     f_net = _recognizable_image_first
+    f_net_previous = _changed_image_first
     counter = 0
     OUTPUT_RESULT = 0
 
@@ -184,16 +185,18 @@ if __name__ == '__main__':
         counter += 1
         print(counter)
 
+
         net_previous = get_output_net(_changed_image_first)
         _changed_image_first = net_previous
 
         f_net = activate_net_values(net_previous, f_net)
 
-        if ((f_net == _recognizable_image_first).all()): #######-------------    CHANGE
+        if ((f_net == f_net_previous).all()): #######-------------    CHANGE
             print('ура')
             OUTPUT_RESULT = f_net.tolist()
             break
         else:
+            f_net_previous = f_net
             continue
 
 
